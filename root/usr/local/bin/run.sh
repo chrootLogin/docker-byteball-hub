@@ -9,7 +9,11 @@ if [ "${MYURL}" == "" ]; then
 fi
 
 mkdir -p /home/byteball/.config
-ln -s /data /home/byteball/.config/byteball-hub
+
+if [ ! -h /home/byteball/.config/byteball-hub ]; then
+  rm -rf /home/byteball/.config/byteball-hub
+  ln -s /data /home/byteball/.config/byteball-hub
+fi
 
 # Copy config if it does not exist.
 if [ ! -f /data/conf.js ]; then
@@ -19,8 +23,10 @@ fi
 # Reset file permissions
 chown -R byteball:byteball /data
 
-rm /opt/byteball-hub/conf.js
-ln -s /data/conf.js /opt/byteball-hub/
+if [ ! -h /opt/byteball-hub/conf.js ]; then
+  rm -f /opt/byteball-hub/conf.js
+  ln -s /data/conf.js /opt/byteball-hub/
+fi
 
 # Switch work directory and execute
 exec su -c "cd /opt/byteball-hub && node ./start.js" byteball
