@@ -8,15 +8,15 @@ exports.minClientVersion = '1.10.0';
 exports.pushApiProjectNumber = 0;
 exports.pushApiKey = '';
 
-if(process.env.PORT == "") {
-  process.exit(1);
-}
-exports.port = process.env.PORT;
+exports.port = 6611;
 
 if(process.env.MYURL == "") {
   process.exit(1);
 }
+
 exports.myUrl = 'wss://' + process.env.MYURL + '/bb';
+console.log("myUrl is: " + exports.myUrl)
+
 exports.bServeAsHub = true;
 exports.bSaveJointJson = true;
 exports.bLight = false;
